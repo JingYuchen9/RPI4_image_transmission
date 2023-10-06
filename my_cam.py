@@ -26,7 +26,7 @@ class publish_bytes_data(Node):
     def timer_callback(self):
         # 从摄像头读取一帧图像
         ret, frame = self.cap.read()
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50] # 压缩率10 占用带宽500kb以内，压缩率90 占用带宽最高2-3M
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 60] # 压缩率10 占用带宽500kb以内，压缩率90 占用带宽最高2-3M
         _,encoding = cv2.imencode('.jpg', frame, encode_param) # 开始压缩 上面使用了JPGE压缩算法
         jpg_data = encoding.tobytes() # 转换成字节码
         decoding = cv2.imdecode(np.frombuffer(jpg_data,np.uint8),cv2.IMREAD_COLOR) # 解压生成图像
@@ -35,10 +35,6 @@ class publish_bytes_data(Node):
         print("压缩完毕!! start image transport")
 
 
-        #jpg_data = encoding.tobytes()
-        #print("压缩完成，压缩结果：")
-        #print(_)
-        #print("开始发")
 
 def main(args = None):
     rclpy.init(args=args)
